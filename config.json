@@ -1,0 +1,81 @@
+{
+  "databases": [
+    {
+      "connection": {
+        "host": "127.0.0.1",
+        "port": 5555,
+        "dbname": "demodb",
+        "schema": "public",
+        "user": "demouser",
+        "password": "demopass"
+      },
+      "validation": [
+        {
+          "type": "TABLE_EXISTS",
+          "description": "Check if required tables exist",
+          "required_tables": [
+            "album",
+            "artist",
+            "customer",
+            "employee",
+            "genre",
+            "invoice",
+            "track"
+          ]
+        },
+        {
+          "type": "TABLE_EXISTS",
+          "description": "Check if required tables exist",
+          "required_tables": [
+            "example-non-existing-table-1",
+            "artist",
+            "track",
+            "example-non-existing-table-2"
+          ]
+        },
+        {
+          "type": "COUNT_CHECK",
+          "description": "Invoice table should have 412 rows",
+          "queryx": "SELECT COUNT(*) FROM invoice",
+          "query": "SELECT * FROM invoice",
+          "operator": "=",
+          "value": 412
+        },
+        {
+          "type": "COUNT_CHECK",
+          "description": "Genre table should have at least 15 row",
+          "query": "SELECT COUNT(*) FROM genre",
+          "operator": ">=",
+          "value": 15
+        },
+        {
+          "type": "PRINTER",
+          "description": "Show 5 customers for manual review",
+          "query": "SELECT customer_id, first_name, last_name, email FROM customer LIMIT 5"
+        },
+        {
+          "type": "INCLUDES_CHECK",
+          "description": "Ensure required genres are present",
+          "query": "SELECT name FROM genre",
+          "values": [
+            ["Rock"],
+            ["Jazz"],
+            ["Classical"]
+          ]
+        },
+        {
+          "type": "INCLUDES_CHECK",
+          "description": "Check specific track metadata exists",
+          "query": "SELECT name, album_id, genre_id, composer FROM track",
+          "values": [
+            ["Balls to the Wall", 2, 1, "U. Dirkschneider, W. Hoffmann, H. Frank, P. Baltes, S. Kaufmann, G. Hoffmann"],
+            ["Fast As a Shark", 3, 1, "F. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman"],
+            ["Princess of the Dawn", 3, 1, "Deaffy & R.A. Smith-Diesel"],
+            ["Spellbound", 1, 1, "Angus Young, Malcolm Young, Brian Johnson"]
+          ]
+        }
+
+      ]
+    }
+  ]
+}
