@@ -36,8 +36,7 @@
         {
           "type": "COUNT_CHECK",
           "description": "Invoice table should have 412 rows",
-          "queryx": "SELECT COUNT(*) FROM invoice",
-          "query": "SELECT * FROM invoice",
+          "query": "SELECT COUNT(*) FROM invoice",
           "operator": "=",
           "value": 412
         },
